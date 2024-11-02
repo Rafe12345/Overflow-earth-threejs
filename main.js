@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import FakeGlowMaterial from './FakeGlowMaterial.js'
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight);
 renderer.setAnimationLoop(animate);
 const controls = new OrbitControls( camera, renderer.domElement );
@@ -30,9 +31,27 @@ function stars(){
 	let x = Math.random() * (500 - -500) + -500;
 	let y = Math.random() * (400 - -150) +  -150;
 	let z = Math.random() * (250 - - 200) + - 200;
-	const geostars = new THREE.SphereGeometry(whd,44,22)
-	const material_stars = new THREE.MeshBasicMaterial({
-	})
+	while(true){
+		if(z > 55 || z < -55){
+			break
+		}
+		else{
+			if(x > 55 || x < -55){
+				break
+			}
+			else{
+				x = Math.random() * (500 - -500) + -500;
+			}
+			
+		}
+	}
+	const geostars = new THREE.SphereGeometry(whd)
+	//const geostars = new THREE.SphereGeometry(whd,44,22)
+	const material_stars = new FakeGlowMaterial({
+		glowInternalRadius: 6.0,
+		depthTest: true,
+		glowColor: new THREE.Color("#F6F5EE")
+	});
 	const stars = new THREE.Mesh(geostars,material_stars)
 	stars.position.set(x,y,z)
 	scene.add(stars)
@@ -41,7 +60,6 @@ function stars(){
 for(let i = 0; i<5000; i++){
 	stars()
 }
-
 function animate() {
 	sphere.rotation.y += 0.005;
 	sphere.rotation.x += 0.001;
