@@ -84,17 +84,20 @@ for (let x = -5; x <= 5; x++) {
 }
 // add stars
 function stars() {
-  let whd = Math.random() * (0.8 - 0.1) + 0.1;
+  let whd = Math.random() * (0.5 - 0.09) + 0.09;
   let x = Math.random() * (500 - -500) + -500;
   let y = Math.random() * (400 - -150) + -150;
-  let z = Math.random() * (250 - -200) + -200;
+  let z = Math.random() * (300 - -250) + -250;
   while (true) {
-    if (z > 55 || z < -55) {
+    if (z > 70 || z < -70) {
       break;
     } else {
-      if (x > 55 || x < -55) {
+      if (x > 300 || x < -300) {
         break;
       } else {
+		if(y < -20){
+			break;
+		}
         x = Math.random() * (500 - -500) + -500;
       }
     }
