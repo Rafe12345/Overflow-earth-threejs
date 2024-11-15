@@ -49,11 +49,11 @@ scene.add(earthSphere);
 scene.add(marsSphere);
 scene.add(marsSphere2);
 
+
 //Mesh Moon
 const moon_geometry = new THREE.SphereGeometry(4, 20, 20);
-const moon_material = new THREE.MeshStandardMaterial();
 const moon_texture = textureLoader.load("resources/Moon_texture.jpg");
-moon_material.map = moon_texture;
+const moon_material = new THREE.MeshStandardMaterial({ map: moon_texture });
 const moon = new THREE.Mesh(moon_geometry, moon_material);
 moon.position.set(70, 0, 0);
 scene.add(moon);
@@ -67,47 +67,61 @@ let angle = 0; // Define angle for Moon's orbit
 const sunx = 25;
 const suny = 0;
 const sunz = 50;
-const light = new THREE.DirectionalLight(0xffffff, 1);
+const light = new THREE.DirectionalLight(0xffffff, 1.1);
 light.position.set(sunx, suny, sunz);
 scene.add(light);
 
-for (let x = -5; x <= 5; x++) {
+for (let x = -5; x <= 5; x += 5) {
   for (let z = -5; z <= 5; z += 5) {
     for (let y = -5; y <= 5; y += 5) {
-      const minilight = new THREE.DirectionalLight(0xffffff, 0.02);
-
-      minilight.position.set(sunx + x * 2.5, suny + y * 2.5, sunz + z * 2.5);
-
+      const minilight = new THREE.DirectionalLight(0xffffff, 0.05);
+      minilight.position.set(sunx + x * 2, suny + y * 2, sunz + z * 2);
       scene.add(minilight);
     }
   }
 }
 // add stars
 function stars() {
-  let whd = Math.random() * (0.5 - 0.09) + 0.09;
-  let x = Math.random() * (500 - -500) + -500;
-  let y = Math.random() * (400 - -150) + -150;
-  let z = Math.random() * (300 - -250) + -250;
-  while (true) {
-    if (z > 70 || z < -70) {
-      break;
-    } else {
-      if (x > 300 || x < -300) {
-        break;
-      } else {
-		if(y < -20){
-			break;
-		}
-        x = Math.random() * (500 - -500) + -500;
-      }
-    }
+  let whl = Math.random() * 0.5 + 0.1;
+  let x = Math.random() * 1000 -500;
+  let y = Math.random() * 600 -300;
+  let z = Math.random() * 600 -300;
+
+while (true) {
+  if (x > 300 || x < -300) {
+    break;
+  } else if (y > 70 || y < -70) {
+    break;
+  } else if (z > 70 || z < -70) {
+    break;
+  } else {
+    x = Math.random() * 1000 -500;
+    y = Math.random() * 600 -300;
+    z = Math.random() * 600 -300;
   }
-  const geostars = new THREE.SphereGeometry(whd);
-  const material_stars = new THREE.MeshBasicMaterial({ color: 0xffffff });
-  const stars = new THREE.Mesh(geostars, material_stars);
-  stars.position.set(x, y, z);
-  scene.add(stars);
 }
+
+  // while (true) {
+  //   if (z > 70 || z < -70) {
+  //     break;
+  //   } else {
+  //     if (x > 300 || x < -300) {
+  //       break;
+  //     } else {
+	// 	if (y < -20) {
+	// 		break;
+	// 	}
+  //       x = Math.random() * (500 - -500) + -500;
+  //     }
+  //   }
+  // }
+
+  const geostars = new THREE.SphereGeometry(whl);
+  const material_star = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  const star = new THREE.Mesh(geostars, material_star);
+  star.position.set(x, y, z);
+  scene.add(star); 
+} //To close the stars function
 for (let i = 0; i < 5000; i++) {
   stars();
 }
@@ -134,8 +148,8 @@ function animate() {
   earthSphere.rotation.y += 0.005;
   marsSphere.rotation.y += 0.005;
   marsSphere2.rotation.y += 0.005;
-  moon.rotation.y += moonspeed; //used to matchj the moon orbiting speed
 
+  moon.rotation.y += moonspeed; //used to match the moon orbiting speed
   angle += moonspeed;
   moon.position.set(
     earthSphere.position.x + moondistance * Math.cos(angle),
