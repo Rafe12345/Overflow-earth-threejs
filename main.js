@@ -28,10 +28,8 @@ scene.add(axesHelper);
 
 // Load texture for sphere
 const textureLoader = new THREE.TextureLoader();
-const earthTexture = textureLoader.load(
-  "resources/world.topo.bathy.200412.3x5400x2700.jpg"
-);
-const marsTexture = textureLoader.load("resources/2k_mars.jpg");
+const earthTexture = textureLoader.load("resources/earth.jpg");
+const marsTexture = textureLoader.load("resources/mars.jpg");
 const jupiterTexture = textureLoader.load("resources/jupiter.jpg");
 const geometry = new THREE.SphereGeometry(15, 100, 100);
 
@@ -53,7 +51,7 @@ scene.add(jupiterSphere);
 
 //Mesh Moon
 const moon_geometry = new THREE.SphereGeometry(4, 20, 20);
-const moon_texture = textureLoader.load("resources/Moon_texture.jpg");
+const moon_texture = textureLoader.load("resources/moon.jpg");
 const moon_material = new THREE.MeshStandardMaterial({ map: moon_texture });
 const moon = new THREE.Mesh(moon_geometry, moon_material);
 moon.position.set(70, 0, 0);
