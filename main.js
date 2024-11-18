@@ -76,11 +76,11 @@ const light = new THREE.DirectionalLight(0xffffff, 1.1);
 light.position.set(sunx, suny, sunz);
 scene.add(light);
 
-for (let x = -5; x <= 5; x += 5) {
-  for (let z = -5; z <= 5; z += 5) {
-    for (let y = -5; y <= 5; y += 5) {
+for (let x = -10; x <= 10; x += 10) {
+  for (let z = -10; z <= 10; z += 10) {
+    for (let y = -10; y <= 10; y += 10) {
       const minilight = new THREE.DirectionalLight(0xffffff, 0.05);
-      minilight.position.set(sunx + x * 2, suny + y * 2, sunz + z * 2);
+      minilight.position.set(sunx + x, suny + y, sunz + z);
       scene.add(minilight);
     }
   }
@@ -106,20 +106,6 @@ function stars() {
     }
   }
 
-  // while (true) {
-  //   if (z > 70 || z < -70) {
-  //     break;
-  //   } else {
-  //     if (x > 300 || x < -300) {
-  //       break;
-  //     } else {
-  // 	if (y < -20) {
-  // 		break;
-  // 	}
-  //       x = Math.random() * (500 - -500) + -500;
-  //     }
-  //   }
-  // }
 
   const geostars = new THREE.SphereGeometry(whl);
   const material_star = new THREE.MeshBasicMaterial({ color: 0xffffff });
