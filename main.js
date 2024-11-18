@@ -45,8 +45,11 @@ marsSphere.position.set(-150, 0, 0);
 
 // Adding Jupiter
 const jupiterMaterial = new THREE.MeshStandardMaterial({ map: jupiterTexture });
-const jupiterSphere = new THREE.Mesh(geometry, jupiterMaterial);
-jupiterSphere.position.set(-250, 0, 0);
+const jupiterSphere = new THREE.Mesh(
+  new THREE.SphereGeometry(50, 100, 100),
+  jupiterMaterial
+);
+jupiterSphere.position.set(-300, -20, 0);
 
 scene.add(earthSphere);
 scene.add(marsSphere);
