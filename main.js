@@ -1,91 +1,33 @@
+//Setting up a scene
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-
 const scene = new THREE.Scene();
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.querySelector("#canvas"),
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+//Setting up camera
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
-const renderer = new THREE.WebGLRenderer({
-  canvas: document.querySelector("#canvas"),
-});
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+camera.position.set(0, 20, 0);
+camera.lookAt(-50, 0, 0);
 
-// Set camera and controls
-camera.position.set(50, 20, 0);
-//set camera rotation to
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.enablePan = false;
-controls.minDistance = 25;
-controls.maxDistance = 60;
-controls.update();
-const axesHelper = new THREE.AxesHelper(1000);
-scene.add(axesHelper);
-
-// Load texture for sphere
+//Loading textures
 const textureLoader = new THREE.TextureLoader();
 const earthTexture = textureLoader.load("resources/earth.jpg");
-const marsTexture = textureLoader.load("resources/mars.jpg");
-const jupiterTexture = textureLoader.load("resources/jupiter.jpg");
-const geometry = new THREE.SphereGeometry(15, 100, 100);
 
-// Adding Earth
+//First 3D object
+const geometry = new THREE.SphereGeometry(15, 100, 100);
 const earthMaterial = new THREE.MeshStandardMaterial({ map: earthTexture });
 const earthSphere = new THREE.Mesh(geometry, earthMaterial);
 earthSphere.position.set(-50, 0, 0);
-
-// Adding Mars
-const marsMaterial = new THREE.MeshStandardMaterial({ map: marsTexture });
-const marsSphere = new THREE.Mesh(geometry, marsMaterial);
-marsSphere.position.set(-150, 0, 0);
-
-// Adding Jupiter
-const jupiterMaterial = new THREE.MeshStandardMaterial({ map: jupiterTexture });
-const jupiterSphere = new THREE.Mesh(
-  new THREE.SphereGeometry(50, 100, 100),
-  jupiterMaterial
-);
-jupiterSphere.position.set(-300, -20, 0);
-
 scene.add(earthSphere);
-scene.add(marsSphere);
-scene.add(jupiterSphere);
 
-//Mesh Moon
-const moon_geometry = new THREE.SphereGeometry(4, 20, 20);
-const moon_texture = textureLoader.load("resources/moon.jpg");
-const moon_material = new THREE.MeshStandardMaterial({ map: moon_texture });
-const moon = new THREE.Mesh(moon_geometry, moon_material);
-moon.position.set(70, 0, 0);
-scene.add(moon);
-
-//Moon rotation
-const moondistance = 35;
-const moonspeed = 0.01;
-let angle = 0; // Define angle for Moon's orbit
-
-// Add lighting
-const sunx = 25;
-const suny = 0;
-const sunz = 50;
-const light = new THREE.DirectionalLight(0xffffff, 1.1);
-light.position.set(sunx, suny, sunz);
-scene.add(light);
-
-for (let x = -10; x <= 10; x += 10) {
-  for (let z = -10; z <= 10; z += 10) {
-    for (let y = -10; y <= 10; y += 10) {
-      const minilight = new THREE.DirectionalLight(0xffffff, 0.05);
-      minilight.position.set(sunx + x, suny + y, sunz + z);
-      scene.add(minilight);
-    }
-  }
-}
-// add stars
+//Part 1 stars
 function stars() {
   let whl = Math.random() * 0.5 + 0.1;
   let x = Math.random() * 1000 - 500;
@@ -106,9 +48,8 @@ function stars() {
     }
   }
 
-
   const geostars = new THREE.SphereGeometry(whl);
-  const material_star = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  const material_star = new THREE.MeshStandardMaterial({ color: 0xffffff });
   const star = new THREE.Mesh(geostars, material_star);
   star.position.set(x, y, z);
   scene.add(star);
@@ -117,33 +58,76 @@ for (let i = 0; i < 5000; i++) {
   stars();
 }
 
-function moveCamera() {
-  let scrollScale = 0.07;
-  // Get the current scroll position from the top of the page
-  const t = document.body.getBoundingClientRect().top;
-  // moves towards the negative x axis
-  camera.position.x = t * scrollScale;
+//Part 1 moon
+const moon_geometry = new THREE.SphereGeometry(4, 20, 20);
+const moon_texture = textureLoader.load("resources/moon.jpg");
+const moon_material = new THREE.MeshStandardMaterial({ map: moon_texture });
+const moon = new THREE.Mesh(moon_geometry, moon_material);
+moon.position.set(70, 0, 0);
+scene.add(moon);
+
+const moondistance = 35;
+const moonspeed = 0.01;
+let angle = 0;
+
+//Part 1 lighting
+const sunx = 25;
+const suny = 0;
+const sunz = 50;
+const light = new THREE.DirectionalLight(0xffffff, 1.1);
+light.position.set(sunx, suny, sunz);
+scene.add(light);
+
+//Part 2 lighting
+for (let x = -10; x <= 10; x += 10) {
+  for (let z = -10; z <= 10; z += 10) {
+    for (let y = -10; y <= 10; y += 10) {
+      const minilight = new THREE.DirectionalLight(0xffffff, 0.05);
+      minilight.position.set(sunx + x, suny + y, sunz + z);
+      scene.add(minilight);
+    }
+  }
 }
 
+// Adding planet Mars
+const marsGeometry = new THREE.SphereGeometry(15, 100, 100);
+const marsTexture = textureLoader.load("resources/mars.jpg");
+const marsMaterial = new THREE.MeshStandardMaterial({ map: marsTexture });
+const marsSphere = new THREE.Mesh(marsGeometry, marsMaterial);
+marsSphere.position.set(-150, 0, 0);
+scene.add(marsSphere);
+
+// Adding planet Jupiter
+const jupiterGeometry = new THREE.SphereGeometry(50, 100, 100);
+const jupiterTexture = textureLoader.load("resources/jupiter.jpg");
+const jupiterMaterial = new THREE.MeshStandardMaterial({ map: jupiterTexture });
+const jupiterSphere = new THREE.Mesh(jupiterGeometry, jupiterMaterial);
+jupiterSphere.position.set(-300, -20, 0);
+scene.add(jupiterSphere);
+
+// Move Camera function
+function moveCamera() {
+  // Get the current scroll position from the top of the page
+  const t = document.body.getBoundingClientRect().top;
+  // update camera position
+  camera.position.x = t * 0.07;
+}
+// Call the function on scroll
 document.body.onscroll = moveCamera;
 moveCamera();
 
-// Animation loop
+//Animation function
 function animate() {
   earthSphere.rotation.y += 0.005;
-  marsSphere.rotation.y += 0.005;
-  jupiterSphere.rotation.y += 0.005;
+  renderer.render(scene, camera);
 
-  moon.rotation.y += moonspeed; //used to match the moon orbiting speed
+  moon.rotation.y += moonspeed;
+
   angle += moonspeed;
   moon.position.set(
     earthSphere.position.x + moondistance * Math.cos(angle),
     earthSphere.position.y,
     earthSphere.position.z + moondistance * Math.sin(angle)
   );
-  //get rid when we doing on scroll
-  //controls.update();
-  renderer.render(scene, camera);
 }
-
 renderer.setAnimationLoop(animate);
