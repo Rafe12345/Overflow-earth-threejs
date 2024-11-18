@@ -39,18 +39,11 @@ const earthSphere = new THREE.Mesh(geometry, earthMaterial);
 earthSphere.position.set(-50, 0, 0);
 
 // Adding Mars
-const marsMaterial = new THREE.MeshStandardMaterial({ map: marsTexture });
-const marsSphere = new THREE.Mesh(geometry, marsMaterial);
-marsSphere.position.set(-150, 0, 0);
 
 // Adding Jupiter
-const jupiterMaterial = new THREE.MeshStandardMaterial({ map: jupiterTexture });
-const jupiterSphere = new THREE.Mesh(geometry, jupiterMaterial);
-jupiterSphere.position.set(-250, 0, 0);
 
+// Adding planets to scene
 scene.add(earthSphere);
-scene.add(marsSphere);
-scene.add(jupiterSphere);
 
 //Mesh Moon
 const moon_geometry = new THREE.SphereGeometry(4, 20, 20);
@@ -128,16 +121,9 @@ for (let i = 0; i < 5000; i++) {
   stars();
 }
 
-function moveCamera() {
-  let scrollScale = 0.07;
-  // Get the current scroll position from the top of the page
-  const t = document.body.getBoundingClientRect().top;
-  // moves towards the negative x axis
-  camera.position.x = t * scrollScale;
-}
+// Implement moveCamera function
 
-document.body.onscroll = moveCamera;
-moveCamera();
+// Call moveCamera function
 
 // Animation loop
 function animate() {
