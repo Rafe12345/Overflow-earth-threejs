@@ -45,10 +45,8 @@ scene.add(earthSphere);
 //Part 1 moon (Creating the moon)
 // const moon_geometry = new THREE.SphereGeometry(4, 20, 20);​
 // const moon_texture = textureLoader.load("resources/moon.jpg");​
-// const moon_material = new THREE.MeshStandardMaterial({ map: moon_texture });​
-// const moon = new THREE.Mesh(moon_geometry, moon_material);​
-// moon.position.set(70, 0, 0);​
-// scene.add(moon);
+// const moon_material =
+// const moon =
 
 //Part 1 lighting (the "Sun")
 
@@ -77,16 +75,12 @@ scene.add(earthSphere);
 // const marsTexture = textureLoader.load("resources/mars.jpg");
 // const marsMaterial =
 // const marsSphere =
-// marsSphere.position.set(-150, 0, 0);
-// scene.add(marsSphere);
 
 // Adding planet Jupiter
 // const jupiterGeometry = new THREE.SphereGeometry(50, 100, 100);
 // const jupiterTexture = textureLoader.load("resources/jupiter.jpg");
 // const jupiterMaterial =
 // const jupiterSphere =
-// jupiterSphere.position.set(-300, -20, 0);
-// scene.add(jupiterSphere);
 
 // Move Camera function
 function moveCamera() {
