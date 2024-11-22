@@ -1,3 +1,4 @@
+// Template code for Overflow ThreeJS workshop participants
 // Setting up a scene
 import * as THREE from "three";
 //const scene =
